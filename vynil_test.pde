@@ -13,19 +13,15 @@ void setup() {
 }
 
 void draw() {
-//  for (int i = 0; i < filenames.length; i++) {
-//    println(i);
-//    img = loadImage(filenames[i]);
-//  }
-  
+
   image(img, 0, 0, 750, 750); 
   //draw image with its top-left corner aligned
   //with window's top-left corner, image scaled to 750×750
 }
 
 void mouseClicked() {
-  if (mouseX < width/2 ) { // click left side of window
-    imgIndex--; //decrease image index
+  if (mouseX < width/2) { // click left side of window
+    imgIndex = (filenames.length - 1) - imgIndex; //decrease image index
   } else { // click right side of window
     imgIndex++; //increase image index
   }
