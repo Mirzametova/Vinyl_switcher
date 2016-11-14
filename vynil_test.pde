@@ -21,11 +21,13 @@ void draw() {
 
 void mouseClicked() {
   if (mouseX < width/2) { // click left side of window
+    //check if first file
     if (imgIndex == 0) {
       imgIndex = filenames.length;
     }
     imgIndex--; //decrease image index
   } else { // click right side of window
+    //check if last file
     if (imgIndex == (filenames.length - 1)) {
       imgIndex = -1;
     }
