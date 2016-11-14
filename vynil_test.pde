@@ -16,15 +16,22 @@ void setup() {
 void draw() {
   //draw image with its top-left corner aligned
   //with window's top-left corner, image scaled to 750×750
-  image(img, 0, 0, 750, 750); 
+  image(img, 0, 0, 750, 750);
 }
 
 void mouseClicked() {
   if (mouseX < width/2) { // click left side of window
-    imgIndex = (filenames.length - 1) - imgIndex; //decrease image index
+    if (imgIndex == 0) {
+      imgIndex = filenames.length;
+    }
+    imgIndex--; //decrease image index
   } else { // click right side of window
+    if (imgIndex == (filenames.length - 1)) {
+      imgIndex = -1;
+    }
     imgIndex++; //increase image index
   }
+  println(imgIndex);
   img = loadImage(filenames[imgIndex]); //reload image
 }
 
