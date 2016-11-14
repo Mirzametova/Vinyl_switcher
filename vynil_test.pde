@@ -6,17 +6,17 @@ void setup() {
   size(750, 750);
   //use sketchPath built-in variable 
   //to get system independent path to sketch
-  String dirPath = sketchPath + "/data";
+  //String dirPath = sketchPath + "/data"; //for Processing 2
+  String dirPath = dataPath("");
   filenames = listFileNames(dirPath);
   //println(filenames);
   img = loadImage(filenames[imgIndex]); //select initial image
 }
 
 void draw() {
-
-  image(img, 0, 0, 750, 750); 
   //draw image with its top-left corner aligned
   //with window's top-left corner, image scaled to 750×750
+  image(img, 0, 0, 750, 750); 
 }
 
 void mouseClicked() {
@@ -39,4 +39,3 @@ String[] listFileNames(String dir) {
     return null;
   }
 }
-
