@@ -33,7 +33,7 @@ void mouseClicked() {
     }
     imgIndex++; //increase image index
   }
-  println(imgIndex);
+  //println(imgIndex);
   img = loadImage(filenames[imgIndex]); //reload image
 }
 
@@ -42,6 +42,13 @@ String[] listFileNames(String dir) {
   File file = new File(dir);
   if (file.isDirectory()) {
     String names[] = file.list();
+    for (int i = 0; i < names.length; i++) {
+      if (names[i].equals(".DS_Store") == true) { //check filenames
+        String namesA[] = subset(names, 0, i); //select subset before DS_Store
+        String namesB[] = subset(names, i+1); //select subset after DS_Store
+        names = concat(namesA, namesB); //concatenate throwing away DS_Store
+      }
+    }
     return names;
   } else {
     // If it's not a directory
