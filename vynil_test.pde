@@ -17,37 +17,31 @@ int lastSwipeTime=0;
 void setup() {
   size(750, 750);
   controller.enableGesture(Gesture.Type.TYPE_SWIPE);
-  //use sketchPath built-in variable 
+  //use sketchPath/dataPath built-in variable 
   //to get system independent path to sketch
   //String dirPath = sketchPath + "/data"; //for Processing 2
   String dirPath = dataPath("");
   filenames = listFileNames(dirPath);
-  
-  images=new PImage[filenames.length];
-  
+  images = new PImage[filenames.length];
   imageCount = 0;
   
-  for(int i = 0; i<filenames.length; i++){
+  for (int i = 0; i<filenames.length; i++) {
     String filename = filenames[i];
-    
-    if(filename.contains(".jpg"))
-    {      
+    if (filename.contains(".jpg")) {      
       images[imageCount]=loadImage(filename);
       imageCount++;
     }
-    
   }
-  
-  
-  println(images);
+
   img = images[imgIndex]; //select initial image
   
 }
 
 void draw() {
   
-  if(millis()-lastSwipeTime<400)
+  if (millis() - lastSwipeTime < 400) {
     return;
+  }
   
   //draw image with its top-left corner aligned
   //with window's top-left corner, image scaled to 750×750
@@ -55,51 +49,45 @@ void draw() {
   Frame frame = controller.frame();
   gestures = frame.gestures();
   
-
-  
   for (int i = 0; i < gestures.count(); i = i+1) {
-     gesture=gestures.get(i);
+    gesture = gestures.get(i);
+    if (gesture.type() != Gesture.Type.TYPE_SWIPE) {
+      continue;
+    }
      
-     if(gesture.type() != Gesture.Type.TYPE_SWIPE)
-       continue;
-     
-     swipie=new SwipeGesture(gesture);
-     //text( swipie.direction() + " direction", 50, 200 );
+    swipie=new SwipeGesture(gesture);
+    //text( swipie.direction() + " direction", 50, 200 );
     swipeDirection = swipie.direction();
     
-    if (swipeDirection.getX()>0){
-    prev();
+    if (swipeDirection.getX() > 0){
+      prev();
+    } else {
+      next();
     }
-    else {
-    next();
-    }
-    println(lastSwipeTime+"lastSwipeTime");
+    println(lastSwipeTime + "lastSwipeTime");
     break;
+  }  
+  
+}
+
+void prev() {
+  if (imgIndex == 0) {
+    imgIndex = imageCount;
   }
-  
-  
+  imgIndex--;
+  img = images[imgIndex];
+  lastSwipeTime = millis();
+  //println(imgIndex);
 }
 
-void prev()
-{
-    if (imgIndex == 0) {
-      imgIndex = imageCount;
-    }
-    imgIndex--;
-    img = images[imgIndex];
-    lastSwipeTime = millis();
-    println(imgIndex);
-}
-
-void next()
-{
-   if (imgIndex == (imageCount - 1)) {
-      imgIndex = -1;
-    }
-    imgIndex++;
-    img = images[imgIndex];
-    lastSwipeTime = millis();
-    println(imgIndex);
+void next() {
+  if (imgIndex == (imageCount - 1)) {
+    imgIndex = -1;
+  }
+  imgIndex++;
+  img = images[imgIndex];
+  lastSwipeTime = millis();
+  //println(imgIndex);
 }
 
 void mouseClicked() {
